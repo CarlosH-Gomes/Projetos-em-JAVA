@@ -9,6 +9,8 @@ import com.model.bean.ContasMorador;
 import com.model.bean.Morador;
 import com.model.dao.ContasMoradorDAO;
 import com.model.dao.MoradorDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,12 +22,27 @@ public class ContasMoradorView extends javax.swing.JFrame {
     /**
      * Creates new form ContasMorador
      */
+    Integer cod=0; 
     public ContasMoradorView() {
         initComponents();     
         readJTable();
-        
+        limpaCampos();
+        inicializaBotao();
     }
-
+    
+    
+    private void inicializaBotao(){
+       if(cod == 0)
+       {
+           btnAtualizar.setEnabled( false );
+           btnExcluir.setEnabled( false );
+           btnSalvar.setEnabled(true);
+       }else{
+           btnAtualizar.setEnabled( true );
+           btnExcluir.setEnabled( true );
+            btnSalvar.setEnabled(false);
+       }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,15 +53,13 @@ public class ContasMoradorView extends javax.swing.JFrame {
     private void initComponents() {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
-        jLabel1 = new javax.swing.JLabel();
         txtNomeMorador = new javax.swing.JTextField();
+        bgPesquisa = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cbTipoConta = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        txtValor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtDataVenc = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMorador = new javax.swing.JTable();
         btnSalvar = new javax.swing.JButton();
@@ -53,6 +68,14 @@ public class ContasMoradorView extends javax.swing.JFrame {
         btnLimpar = new javax.swing.JButton();
         cbCPFMorador = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txt_pesquisa = new javax.swing.JTextField();
+        btnPesquisar = new javax.swing.JToggleButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        txtValor = new javax.swing.JFormattedTextField();
+        txtDataVenc = new javax.swing.JFormattedTextField();
 
         jInternalFrame1.setVisible(true);
 
@@ -67,11 +90,9 @@ public class ContasMoradorView extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel1.setText("Nome Morador:");
-
         txtNomeMorador.setEnabled(false);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel3.setText("Conta:");
 
@@ -128,68 +149,136 @@ public class ContasMoradorView extends javax.swing.JFrame {
 
         jLabel6.setText("CPF:");
 
+        jLabel1.setText("Pesquisa");
+
+        txt_pesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pesquisaKeyReleased(evt);
+            }
+        });
+
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
+
+        bgPesquisa.add(jRadioButton1);
+        jRadioButton1.setText("Nome");
+
+        bgPesquisa.add(jRadioButton2);
+        jRadioButton2.setText("CPF");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
+        bgPesquisa.add(jRadioButton3);
+        jRadioButton3.setText("Número do Apartamento");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        txtValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.###"))));
+        txtValor.setToolTipText("");
+
+        try {
+            txtDataVenc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel1)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtDataVenc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                                .addComponent(txtValor, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(cbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cbCPFMorador, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(txtNomeMorador)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btnSalvar)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnAtualizar)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnExcluir)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnLimpar)))
-                    .addComponent(jLabel2))
-                .addGap(43, 43, 43)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtValor)
+                            .addComponent(cbTipoConta, 0, 90, Short.MAX_VALUE)
+                            .addComponent(txtDataVenc)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSalvar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAtualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbCPFMorador, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton3))
+                            .addComponent(txt_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPesquisar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(txtNomeMorador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txt_pesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbCPFMorador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6))
+                            .addComponent(btnPesquisar))
+                        .addGap(4, 4, 4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(cbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbCPFMorador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(txtDataVenc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -197,17 +286,25 @@ public class ContasMoradorView extends javax.swing.JFrame {
                             .addComponent(btnSalvar)
                             .addComponent(btnAtualizar)
                             .addComponent(btnExcluir)
-                            .addComponent(btnLimpar))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                            .addComponent(btnLimpar))
+                        .addGap(51, 51, 51))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-            cadastraContaMorador();
-            limpaCampos();            
-            readJTable();
+           if(txtNomeMorador.getText().trim().equals("")){
+            JOptionPane.showMessageDialog(null,"Escolha um Morador");
+           }
+           else
+           {
+                cadastraContaMorador();
+                limpaCampos();            
+                readJTable();
+             
+           }
+            
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
@@ -234,6 +331,23 @@ public class ContasMoradorView extends javax.swing.JFrame {
             cbCPFMorador.addItem(jTableMorador.getValueAt(jTableMorador.getSelectedRow(), 1));
         }
     }//GEN-LAST:event_jTableMoradorMouseClicked
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+      readJTableNome(txt_pesquisa.getText().toString());
+        
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void txt_pesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pesquisaKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_pesquisaKeyReleased
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,6 +387,18 @@ public class ContasMoradorView extends javax.swing.JFrame {
         });
     }
     
+    public void recebeDados(Integer codigo)   {
+        ContasMoradorDAO cmdao = new ContasMoradorDAO();
+        ContasMorador cm = null;
+        cm = cmdao.findByID(codigo);
+        cbTipoConta.setSelectedItem(cm.getTipoConta());
+        txtValor.setText(cm.getValor());
+        txtDataVenc.setText(cm.getDataVenc());
+        cbCPFMorador.addItem(cm.getMoradorCpf());
+        cod = codigo;
+        inicializaBotao();
+    }
+    
     public void readJTable() {
 
         DefaultTableModel modelo = (DefaultTableModel) jTableMorador.getModel();
@@ -291,10 +417,28 @@ public class ContasMoradorView extends javax.swing.JFrame {
         }
     }
     
+       public void readJTableNome(String nome) {
+
+        DefaultTableModel modelo = (DefaultTableModel) jTableMorador.getModel();
+        modelo.setNumRows(0);
+        MoradorDAO mdao = new MoradorDAO();
+        for (Morador m : mdao.findByNome(nome)) {
+            modelo.addRow(new Object[]{
+                m.getCodigo(),
+                m,
+                m.getNome(),
+                m.getAndarApt(),
+                m.getNumApt(),
+                m.getBlocoApt()               
+            });
+               
+        }
+    }
     private void cadastraContaMorador() {
         
         ContasMorador cm = new ContasMorador();
         ContasMoradorDAO dao = new ContasMoradorDAO();
+         
         Morador m = (Morador) cbCPFMorador.getSelectedItem(); 
         cm.setTipoConta((String) cbTipoConta.getSelectedItem());
         cm.setValor(txtValor.getText());
@@ -302,27 +446,31 @@ public class ContasMoradorView extends javax.swing.JFrame {
         cm.setMoradorCpf(m);
         dao.save(cm);
         limpaCampos();
+ 
     }
     
 
      private void atualizaContaMorador() {
         ContasMorador cm = new ContasMorador();
         ContasMoradorDAO dao = new ContasMoradorDAO();
-        
-        cm.setCodigo((int) jTableMorador.getValueAt(jTableMorador.getSelectedRow(), 0));
+       
+        cm.setCodigo(cod );
         cm.setMoradorCpf((Morador) cbCPFMorador.getSelectedItem());
        cm.setTipoConta((String) cbTipoConta.getSelectedItem());
         cm.setValor(txtValor.getText());
         cm.setDataVenc(txtDataVenc.getText());
         dao.update(cm);
         limpaCampos();
+        
     }
     
     private void excluiContaMorador(){
         ContasMoradorDAO cmdao = new ContasMoradorDAO();
-        cmdao.remove((int) jTableMorador.getValueAt(jTableMorador.getSelectedRow(), 0));
+
+        cmdao.remove(cod);
         limpaCampos();
         readJTable();
+    
     }
     
     
@@ -332,14 +480,19 @@ public class ContasMoradorView extends javax.swing.JFrame {
        txtNomeMorador.setText("");
        txtDataVenc.setText("");
        txtValor.setText("");
-       cbTipoConta.removeAll();
+       cbTipoConta.setSelectedItem(null);
+       cbCPFMorador.setSelectedItem(null);
+       cod = 0;
+       inicializaBotao();
    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgPesquisa;
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnLimpar;
+    private javax.swing.JToggleButton btnPesquisar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<Object> cbCPFMorador;
     private javax.swing.JComboBox<String> cbTipoConta;
@@ -350,10 +503,14 @@ public class ContasMoradorView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMorador;
-    private javax.swing.JTextField txtDataVenc;
+    private javax.swing.JFormattedTextField txtDataVenc;
     private javax.swing.JTextField txtNomeMorador;
-    private javax.swing.JTextField txtValor;
+    private javax.swing.JFormattedTextField txtValor;
+    private javax.swing.JTextField txt_pesquisa;
     // End of variables declaration//GEN-END:variables
 }

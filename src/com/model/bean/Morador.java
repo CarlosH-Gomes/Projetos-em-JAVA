@@ -5,10 +5,12 @@
  */
 package com.model.bean;
 
+import com.sun.istack.internal.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -21,6 +23,8 @@ public class Morador  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//Auto -> escolhe o melhor / identity -> gara sozinho /  SEQUENCE -> quando bd não possui suporte pra auto inclemento
     private Integer codigo;
     private String nome;
+    @NotNull
+    @OneToMany
     private String cpf;
     private String rg;
     private String dataNasc;

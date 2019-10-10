@@ -53,7 +53,7 @@ public class MoradorDAO {
         return morador;
     }
 
-    public Morador findByID(Integer id) {
+    public  List<Morador>  findByID(Integer id) {
 
         EntityManager em = new ConnectionFactory().getConnection();
         Morador morador = null;
@@ -66,10 +66,26 @@ public class MoradorDAO {
             em.close();
         }
 
-        return morador;
+        return (List<Morador>) morador;
 
     }
+    
+        public List<Morador> findByNome(String nome) {
 
+        EntityManager em = new ConnectionFactory().getConnection();
+        Morador morador = null;
+
+        try {
+            morador = em.find(Morador.class, nome);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Buscar" + e);
+        } finally {
+            em.close();
+        }
+
+        return (List<Morador>) morador;
+
+    }
     public List<Morador> FindAll() {
         EntityManager em = new ConnectionFactory().getConnection();
         List<Morador> morador = null;
@@ -84,6 +100,9 @@ public class MoradorDAO {
 
         return morador;
     }
+    
+    
+    
 
     public Morador remove(Integer id) {
         EntityManager em = new ConnectionFactory().getConnection();

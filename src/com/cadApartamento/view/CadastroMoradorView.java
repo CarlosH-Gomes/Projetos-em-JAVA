@@ -24,9 +24,21 @@ public class CadastroMoradorView extends javax.swing.JFrame {
          DefaultTableModel modelo = (DefaultTableModel) jTableMorador.getModel();
         jTableMorador.setRowSorter(new TableRowSorter(modelo));
         readJTable();
+       inicializaBotao();
     }
-    
-   
+       Integer cod=0; 
+      private void inicializaBotao(){
+       if(cod == 0)
+       {
+           btnAtualizar.setEnabled( false );
+           btnExcluir.setEnabled( false );
+           btnSalvar.setEnabled(true);
+       }else{
+           btnAtualizar.setEnabled( true );
+           btnExcluir.setEnabled( true );
+            btnSalvar.setEnabled(false);
+       }
+    }
 
     
     @SuppressWarnings("unchecked")
@@ -330,6 +342,8 @@ public class CadastroMoradorView extends javax.swing.JFrame {
             txtAndar.setText(jTableMorador.getValueAt(jTableMorador.getSelectedRow(), 7).toString());
             txtBloco.setText(jTableMorador.getValueAt(jTableMorador.getSelectedRow(), 8).toString());
         }
+        cod = 1;
+        inicializaBotao();
     }//GEN-LAST:event_jTableMoradorMouseClicked
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
@@ -371,6 +385,8 @@ public class CadastroMoradorView extends javax.swing.JFrame {
         limpaCampos();
     }
     
+    
+    
     private void atualizaMorador() {
         Morador m = new Morador();
         MoradorDAO dao = new MoradorDAO();
@@ -406,6 +422,8 @@ public class CadastroMoradorView extends javax.swing.JFrame {
        txtNumApt.setText("");
        txtAndar.setText("");
        txtBloco.setText("");
+       cod = 0;
+        inicializaBotao();
    }
     
     public static void main(String args[]) {

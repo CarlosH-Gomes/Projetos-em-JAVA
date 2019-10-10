@@ -74,7 +74,7 @@ public class ContasMoradorDAO {
         List<ContasMorador> cm = null;
 
         try {
-            cm = em.createQuery("from Morador m").getResultList();
+            cm = em.createQuery("from ContasMorador cm").getResultList();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Atualizar" + e);
         } finally {

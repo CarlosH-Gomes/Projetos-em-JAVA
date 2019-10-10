@@ -61,9 +61,19 @@ public class Principal extends javax.swing.JFrame {
                 mContasMoradorMousePressed(evt);
             }
         });
+        mContasMorador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mContasMoradorActionPerformed(evt);
+            }
+        });
         menuContasMorador.add(mContasMorador);
 
         mConsutaContasMorador.setText("Consulta Contas Morador");
+        mConsutaContasMorador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mConsutaContasMoradorMousePressed(evt);
+            }
+        });
         mConsutaContasMorador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mConsutaContasMoradorActionPerformed(evt);
@@ -103,8 +113,17 @@ public class Principal extends javax.swing.JFrame {
            cm.setVisible(true);
     }//GEN-LAST:event_mContasMoradorMousePressed
 
+    private void mContasMoradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mContasMoradorActionPerformed
+        
+    }//GEN-LAST:event_mContasMoradorActionPerformed
+
+    private void mConsutaContasMoradorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mConsutaContasMoradorMousePressed
+        VisualizarContasMoradorView cm = new VisualizarContasMoradorView();
+           cm.setVisible(true);
+    }//GEN-LAST:event_mConsutaContasMoradorMousePressed
+
     private void mConsutaContasMoradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mConsutaContasMoradorActionPerformed
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_mConsutaContasMoradorActionPerformed
 
     /**
