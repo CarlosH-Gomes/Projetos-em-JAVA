@@ -17,16 +17,16 @@ public class ComunicacaoMaquina {
 
 	private Long id;
 	private String estado;
-	private Date data;
+	//private String data;
 	
 	public ComunicacaoMaquina() {
 		
 	}
 	
-	public ComunicacaoMaquina(Long id,String estado, Date data) {
+	public ComunicacaoMaquina(Long id,String estado, String data) {
 		this.id = id;
 		this.estado = estado;
-		this.data = data;
+		//this.data = data;
 	}
 
 	@Id
@@ -49,14 +49,6 @@ public class ComunicacaoMaquina {
 		this.estado = estado;
 	}
 
-	@Column(name = "MAQUINA_DATA", nullable = false, length = 100 )
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
 
 	
 }

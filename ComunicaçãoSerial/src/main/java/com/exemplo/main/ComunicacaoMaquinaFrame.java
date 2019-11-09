@@ -180,7 +180,7 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		
 		
 		maquina.setEstado(txtEstado.getText());
-		//maquina.setData(txtData.getText());
+		//maquina.setData("teste");
         return maquina;		
 	}
 	
@@ -241,6 +241,8 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 	
 	private void atualizaLabel() {
 		
+		MaquinaService maquinaService = new MaquinaService();
+		ComunicacaoMaquina maquina = new ComunicacaoMaquina();
 		Calendar c = Calendar.getInstance();
 		
 		if(estados >= 9 ) {
@@ -252,9 +254,8 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		}else if(estados == 1) {
 			txtEstado.setText("Encher");
 			txtData.setText("Data: "+c.getTime());
-			//MaquinaService maquinaService = new MaquinaService();
-			//ComunicacaoMaquina maquina = pegarDadosMaquinaFromTela();
-			//maquinaService.salvarMaquina(maquina);
+			maquina = pegarDadosMaquinaFromTela();
+			maquinaService.salvarMaquina(maquina);
 			
 		}else if(estados == 2) {
 			txtEstado.setText("Agitar");
