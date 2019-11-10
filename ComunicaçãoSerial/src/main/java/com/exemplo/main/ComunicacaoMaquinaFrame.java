@@ -9,10 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.exemplo.conexao.Conexao;
-import com.exemplo.model.Cliente;
 import com.exemplo.model.ComunicacaoMaquina;
 import com.exemplo.reports.GeraRelatorio;
-import com.exemplo.service.ClienteService;
 import com.exemplo.service.MaquinaService;
 
 import net.sf.jasperreports.engine.JRParameter;
@@ -136,12 +134,12 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		
 		btnRelatorio_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClienteService clienteService = new ClienteService();
-				List<Cliente> listaCliente = clienteService.listarTodosClientes();
-				String nomeArquivo = "relatorio_maquina2";
+				MaquinaService maquinaService = new MaquinaService();
+				List<ComunicacaoMaquina> listaMaquina = maquinaService.listarTodosMaquinas();
+				String nomeArquivo = "relatorio_maquina";
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put(JRParameter.REPORT_LOCALE, new Locale("pt","BR"));
-				GeraRelatorio geraRelatorio = new GeraRelatorio(nomeArquivo, params, listaCliente);
+				GeraRelatorio geraRelatorio = new GeraRelatorio(nomeArquivo, params, listaMaquina);
 				geraRelatorio.callReport();
 			}
 		});
