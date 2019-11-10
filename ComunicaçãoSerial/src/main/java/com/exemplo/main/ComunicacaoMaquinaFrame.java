@@ -11,8 +11,11 @@ import javax.swing.border.EmptyBorder;
 import com.exemplo.conexao.Conexao;
 import com.exemplo.model.Cliente;
 import com.exemplo.model.ComunicacaoMaquina;
+import com.exemplo.reports.GeraRelatorio;
 import com.exemplo.service.ClienteService;
 import com.exemplo.service.MaquinaService;
+
+import net.sf.jasperreports.engine.JRParameter;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -26,11 +29,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Calendar;
+import javax.swing.JLayeredPane;
 
 
 
@@ -69,6 +76,9 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 	private JButton btnAvancaEtapa;
 	private JTextField txtEstado;
 	private JTextField txtData;
+	private JButton btnRelatorio;
+	private JButton btnRelatorio_2;
+	private JLayeredPane layeredPane_1;
 	
 	
 	public static void main(String[] args) {
@@ -97,6 +107,7 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		leiaStopBits();
 		
 		leiaPortas();
+		createEvents();
 	}
 	
 	
@@ -110,6 +121,30 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+	}
+	
+	private void createEvents() {
+		btnRelatorio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		     	String nomeArquivo = "relatorio_maquina";
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put(JRParameter.REPORT_LOCALE, new Locale("pt","BR"));
+				GeraRelatorio geraRelatorio = new GeraRelatorio(nomeArquivo, params);
+				geraRelatorio.generateReports();
+			}
+		});
+		
+		btnRelatorio_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClienteService clienteService = new ClienteService();
+				List<Cliente> listaCliente = clienteService.listarTodosClientes();
+				String nomeArquivo = "relatorio_maquina2";
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put(JRParameter.REPORT_LOCALE, new Locale("pt","BR"));
+				GeraRelatorio geraRelatorio = new GeraRelatorio(nomeArquivo, params, listaCliente);
+				geraRelatorio.callReport();
+			}
+		});
 	}
 	
 	private void leiaPortas() {
@@ -287,41 +322,135 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 	private void initComponents() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 835, 553);
+		setBounds(100, 100, 558, 361);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 536, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(77, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 301, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(44, Short.MAX_VALUE))
+		);
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		tabbedPane.addTab("Conexão", null, layeredPane, null);
+		
 		JLabel lblPorta = new JLabel("Porta:");
+		lblPorta.setBounds(34, 34, 50, 14);
+		layeredPane.add(lblPorta);
 		
 		portaComboBox = new JComboBox<String>();
+		portaComboBox.setBounds(94, 34, 349, 20);
+		layeredPane.add(portaComboBox);
 		
 		JLabel lblBaudRate = new JLabel("Baud Rate:");
+		lblBaudRate.setBounds(10, 65, 74, 14);
+		layeredPane.add(lblBaudRate);
 		
 		baudRateComboBox = new JComboBox<String>();
+		baudRateComboBox.setBounds(94, 65, 349, 20);
+		layeredPane.add(baudRateComboBox);
 		
 		JLabel lblDataBits = new JLabel("Data Bits:");
+		lblDataBits.setBounds(17, 103, 67, 14);
+		layeredPane.add(lblDataBits);
 		
 		dataBitsComboBox = new JComboBox<String>();
+		dataBitsComboBox.setBounds(94, 103, 349, 20);
+		layeredPane.add(dataBitsComboBox);
 		
 		JLabel lblParidade = new JLabel("Paridade:");
+		lblParidade.setBounds(17, 134, 67, 14);
+		layeredPane.add(lblParidade);
 		
 		paridadeComboBox = new JComboBox<String>();
+		paridadeComboBox.setBounds(94, 134, 349, 20);
+		layeredPane.add(paridadeComboBox);
 		
 		JLabel lblStopBits = new JLabel("Stop Bits:");
+		lblStopBits.setBounds(17, 172, 67, 14);
+		layeredPane.add(lblStopBits);
 		
 		stopBitsComboBox = new JComboBox<String>();
+		stopBitsComboBox.setBounds(94, 172, 349, 20);
+		layeredPane.add(stopBitsComboBox);
 		
 		btnConectar = new JButton("Conectar");
+		btnConectar.setBounds(115, 215, 110, 23);
+		layeredPane.add(btnConectar);
+		
+		btnDesconectar = new JButton("Desconectar");
+		btnDesconectar.setBounds(261, 215, 110, 23);
+		layeredPane.add(btnDesconectar);
 		btnConectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				criarConexao(e);
 			}
 		});
 		
-		btnDesconectar = new JButton("Desconectar");
+		layeredPane_1 = new JLayeredPane();
+		tabbedPane.addTab("Controle Maquina", null, layeredPane_1, null);
+		
+		txtEstado = new JTextField();
+		txtEstado.setEditable(false);
+		txtEstado.setBounds(111, 68, 211, 20);
+		layeredPane_1.add(txtEstado);
+		txtEstado.setColumns(10);
 		
 		btnLiga = new JButton("Liga");
+		btnLiga.setBounds(64, 99, 85, 23);
+		layeredPane_1.add(btnLiga);
+		
+		btnDesliga = new JButton("Desliga");
+		btnDesliga.setBounds(184, 99, 85, 23);
+		layeredPane_1.add(btnDesliga);
+		
+		 btnAvancaEtapa = new JButton("Avançar Etapa");
+		 btnAvancaEtapa.setBounds(293, 99, 137, 23);
+		 layeredPane_1.add(btnAvancaEtapa);
+		 
+		 txtData = new JTextField();
+		 txtData.setEditable(false);
+		 txtData.setBounds(111, 37, 211, 20);
+		 layeredPane_1.add(txtData);
+		 txtData.setColumns(10);
+		 
+		 btnRelatorio = new JButton("Relatorio");
+		 btnRelatorio.setBounds(104, 159, 120, 23);
+		 layeredPane_1.add(btnRelatorio);
+		 
+		 btnRelatorio_2 = new JButton("Relatorio 2");
+		 btnRelatorio_2.setBounds(234, 159, 120, 23);
+		 layeredPane_1.add(btnRelatorio_2);
+		 
+		 JLabel lblDataEHora = new JLabel("Data e Hora:");
+		 lblDataEHora.setBounds(26, 40, 75, 14);
+		 layeredPane_1.add(lblDataEHora);
+		 
+		 JLabel lblEstadoAtual = new JLabel("Estado Atual:");
+		 lblEstadoAtual.setBounds(26, 71, 75, 14);
+		 layeredPane_1.add(lblEstadoAtual);
+		 btnAvancaEtapa.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		avancaEtapa(e);
+		 	}
+		 });
+		btnDesliga.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				enviarMensagemDesliga(e);
+			}
+		});
 		btnLiga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -331,100 +460,6 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 
 			
 		});
-		
-		btnDesliga = new JButton("Desliga");
-		btnDesliga.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				enviarMensagemDesliga(e);
-			}
-		});
-		
-		 btnAvancaEtapa = new JButton("Avançar Etapa");
-		btnAvancaEtapa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				avancaEtapa(e);
-			}
-		});
-		
-		txtEstado = new JTextField();
-		txtEstado.setColumns(10);
-		
-		txtData = new JTextField();
-		txtData.setColumns(10);
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(65)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblBaudRate)
-						.addComponent(lblPorta)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblDataBits)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblStopBits)
-								.addComponent(lblParidade))))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtData, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtEstado, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(baudRateComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(portaComboBox, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)
-							.addComponent(dataBitsComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(stopBitsComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(paridadeComboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(btnLiga, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnConectar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addGap(18)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnDesconectar)
-									.addComponent(btnDesliga))
-								.addGap(31)
-								.addComponent(btnAvancaEtapa))))
-					.addGap(323))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(66)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPorta)
-						.addComponent(portaComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblBaudRate)
-						.addComponent(baudRateComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDataBits)
-						.addComponent(dataBitsComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblParidade)
-						.addComponent(paridadeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblStopBits)
-						.addComponent(stopBitsComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(30)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnDesconectar)
-						.addComponent(btnConectar))
-					.addGap(18)
-					.addComponent(txtEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(13)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnLiga)
-						.addComponent(btnDesliga)
-						.addComponent(btnAvancaEtapa))
-					.addGap(27)
-					.addComponent(txtData, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(106, Short.MAX_VALUE))
-		);
 		contentPane.setLayout(gl_contentPane);
 		
 		leiaPortas();
