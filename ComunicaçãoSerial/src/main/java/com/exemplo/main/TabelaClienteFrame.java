@@ -165,7 +165,7 @@ public class TabelaClienteFrame extends JFrame {
 		});
 		btnRelatorio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		     	String nomeArquivo = "relatorio_cliente";
+		     	String nomeArquivo = "relatorio_maquina";
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put(JRParameter.REPORT_LOCALE, new Locale("pt","BR"));
 				GeraRelatorio geraRelatorio = new GeraRelatorio(nomeArquivo, params);
@@ -177,7 +177,7 @@ public class TabelaClienteFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ClienteService clienteService = new ClienteService();
 				List<Cliente> listaCliente = clienteService.listarTodosClientes();
-				String nomeArquivo = "relatorio_cliente2";
+				String nomeArquivo = "relatorio_maquina";
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put(JRParameter.REPORT_LOCALE, new Locale("pt","BR"));
 				GeraRelatorio geraRelatorio = new GeraRelatorio(nomeArquivo, params, listaCliente);

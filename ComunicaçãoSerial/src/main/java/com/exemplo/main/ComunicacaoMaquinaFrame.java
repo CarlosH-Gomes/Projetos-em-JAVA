@@ -177,10 +177,10 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 	
 	protected ComunicacaoMaquina pegarDadosMaquinaFromTela() {
 		ComunicacaoMaquina maquina = new ComunicacaoMaquina();
-		
+		Date date=new Date();
 		
 		maquina.setEstado(txtEstado.getText());
-		//maquina.setData("teste");
+		maquina.setData(date);
         return maquina;		
 	}
 	
@@ -243,19 +243,19 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		
 		MaquinaService maquinaService = new MaquinaService();
 		ComunicacaoMaquina maquina = new ComunicacaoMaquina();
-		Calendar c = Calendar.getInstance();
-		
+		Date date = new Date();
+		 
+		txtData.setText("Data: "+date);	
 		if(estados >= 9 ) {
 			estados = 0;
 		}		
 		if(estados == 0) {
+			
 			txtEstado.setText("Desligado");
-			txtData.setText("Data: "+c.getTime());	
+			
 		}else if(estados == 1) {
 			txtEstado.setText("Encher");
-			txtData.setText("Data: "+c.getTime());
-			maquina = pegarDadosMaquinaFromTela();
-			maquinaService.salvarMaquina(maquina);
+			
 			
 		}else if(estados == 2) {
 			txtEstado.setText("Agitar");
@@ -279,6 +279,8 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 			txtEstado.setText("Centrifugar");
 			conexao.sendData("8");
 		}
+		maquina = pegarDadosMaquinaFromTela();
+		maquinaService.salvarMaquina(maquina);
 	}
 	
 	

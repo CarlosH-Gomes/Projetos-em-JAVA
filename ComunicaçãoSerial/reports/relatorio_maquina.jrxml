@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_maquina" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b9346de1-93a1-46eb-b426-c03db03839ea">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[bWFxdWluYS50YWJfbWFxdWluYSBBUyAsOTUsMTUzLDY2Y2I1NWM2LTU3NTQtNDM5NS04ZGVjLTdl
+YzEzODQ3YzY0Njs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="479"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="521"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sqlConexao"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT maquina.tab_maquina.`MAQUINA_ID`,
+	maquina.tab_maquina.`MAQUINA_DATA`,
+	maquina.tab_maquina.`MAQUINA_ESTADO`
+FROM maquina.tab_maquina]]>
+	</queryString>
+	<field name="MAQUINA_ID" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="MAQUINA_ID"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tab_maquina"/>
+	</field>
+	<field name="MAQUINA_DATA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="MAQUINA_DATA"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tab_maquina"/>
+	</field>
+	<field name="MAQUINA_ESTADO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MAQUINA_ESTADO"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tab_maquina"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="0" width="100" height="30" uuid="5bbf2530-008a-46da-ab36-ef6324464b46">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5bb326d6-f086-43c1-ae1b-79c3bcec2746"/>
+				</reportElement>
+				<text><![CDATA[MAQUINA_ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="100" height="30" uuid="0e0735ad-1bf4-49cd-a356-17dd3b5b293b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86e42f7f-fe91-4497-8eea-0bbc3f68ff9c"/>
+				</reportElement>
+				<text><![CDATA[MAQUINA_DATA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="10" width="100" height="30" uuid="112b7cec-3578-43cb-b2d5-6af446e21b56">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e175766-575d-49ef-8a61-9f3c35858ef5"/>
+				</reportElement>
+				<text><![CDATA[MAQUINA_ESTADO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="60" width="100" height="30" uuid="23bdda5d-1bfd-488d-8168-ba7942b9a842">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5bb326d6-f086-43c1-ae1b-79c3bcec2746"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{MAQUINA_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="47" width="100" height="30" uuid="64500eac-82fc-47ae-9a16-83cc3b84bb42">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86e42f7f-fe91-4497-8eea-0bbc3f68ff9c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{MAQUINA_DATA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="50" width="100" height="30" uuid="d7e2249c-97b7-4fef-b097-e1889e09891e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e175766-575d-49ef-8a61-9f3c35858ef5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{MAQUINA_ESTADO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
