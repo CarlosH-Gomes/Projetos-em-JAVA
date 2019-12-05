@@ -171,7 +171,7 @@ public class Conexao implements SerialPortEventListener {
 		ComunicacaoMaquinaFrame cmf = new ComunicacaoMaquinaFrame();
 		if (event.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
-				//this.setEstadoAtual(leitura.read());
+				this.setEstadoAtual(leitura.read());
 				int result = leitura.read();
 				cmf.atualizaLabel(result);
 				//System.out.println("recebendo dados na serial " + result);

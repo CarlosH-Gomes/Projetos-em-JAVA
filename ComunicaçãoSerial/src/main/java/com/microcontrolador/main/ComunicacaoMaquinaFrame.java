@@ -102,8 +102,9 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		getPathLib();
 		
 		initComponents();
-		//Thread atualiza = new Thread(new javax.swing.JFrame.ComunicacaoMaquinaFrame());
-       // atualiza.start();
+		
+		//Thread atualiza = new Thread(new ComunicacaoMaquinaFrame.atualizaTemp());
+        //atualiza.start();
 		
 		leiaBaudRate();
 		leiaDataBits();
@@ -341,13 +342,15 @@ public class ComunicacaoMaquinaFrame extends JFrame {
 		estados = estadoAtual;
 		atualizaLabel();
 	}
+
 	
 	private void atualizaLabel() {
 		
 		MaquinaService maquinaService = new MaquinaService();
 		ComunicacaoMaquina maquina = new ComunicacaoMaquina();
 		Date date = new Date();
-		System.out.println("recebendo dados na serial " + estados);
+		estados = conexao.getEstadoAtual();
+		//System.out.println("recebendo dados na serial " + estados);
 		txtData.setText("Data: "+date);	
 		if(estados >= 9 ) {
 			estados = 0;
