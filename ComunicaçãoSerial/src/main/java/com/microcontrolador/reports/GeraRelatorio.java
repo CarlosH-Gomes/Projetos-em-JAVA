@@ -89,15 +89,6 @@ public class GeraRelatorio extends JFrame{
 									 	  "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 	public Collection<?> getCollection() {
 		return collection;

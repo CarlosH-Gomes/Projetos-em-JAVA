@@ -178,8 +178,7 @@ public class Conexao implements SerialPortEventListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		
+		}		
 	}
 
 	
